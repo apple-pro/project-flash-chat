@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
     
     func segueToChat() {
-        self.performSegue(withIdentifier: Constants.segueToChat, sender: self)
+        self.performSegue(withIdentifier: K.segueToChat, sender: self)
     }
     
     func segueToRoot() {

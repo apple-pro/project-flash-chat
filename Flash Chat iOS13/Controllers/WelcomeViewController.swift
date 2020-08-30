@@ -10,15 +10,13 @@ import UIKit
 import CLTypingLabel
 
 class WelcomeViewController: UIViewController {
-    
-    let label = "⚡️FlashChat"
 
     @IBOutlet weak var titleLabel: CLTypingLabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = label
+        titleLabel.text = K.appName
         //writeLabel(currentIndex: 0)
     }
     
@@ -26,9 +24,9 @@ class WelcomeViewController: UIViewController {
     func writeLabel(currentIndex: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             
-            self.titleLabel.text = String(self.label.prefix(currentIndex))
+            self.titleLabel.text = String(K.appName.prefix(currentIndex))
             
-            if currentIndex < self.label.count {
+            if currentIndex < K.appName.count {
                 self.writeLabel(currentIndex: currentIndex+1)
             }
         }

@@ -7,18 +7,22 @@
 //
 
 import UIKit
+import CLTypingLabel
 
 class WelcomeViewController: UIViewController {
     
     let label = "⚡️FlashChat"
 
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: CLTypingLabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        writeLabel(currentIndex: 0)
+        
+        titleLabel.text = label
+        //writeLabel(currentIndex: 0)
     }
     
+    //deprecated. replaced by CLTypingLabel
     func writeLabel(currentIndex: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             

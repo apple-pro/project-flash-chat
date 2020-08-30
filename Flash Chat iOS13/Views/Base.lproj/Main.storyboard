@@ -30,7 +30,7 @@
                                     <segue destination="5v2-hE-4Ub" kind="show" id="Cvd-wA-0ee"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⚡️FlashChat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7D-jv-BlJ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⚡️FlashChat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7D-jv-BlJ" customClass="CLTypingLabel" customModule="CLTypingLabel">
                                 <rect key="frame" x="52" y="418" width="310" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="ph1-wX-D3a"/>
@@ -123,7 +123,6 @@
                                         </state>
                                         <connections>
                                             <action selector="registerPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9dE-Sc-egq"/>
-                                            <segue destination="lwd-AH-u8E" kind="show" id="sWK-vF-HO1"/>
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="textfield" translatesAutoresizingMaskIntoConstraints="NO" id="jY9-l3-E1g">
@@ -152,12 +151,24 @@
                                     <constraint firstAttribute="trailing" secondItem="jY9-l3-E1g" secondAttribute="trailing" id="y40-C4-FjS"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message Here!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDR-sp-g9C">
+                                <rect key="frame" x="107" y="742" width="200" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="dpp-DO-1LR"/>
+                                    <constraint firstAttribute="width" constant="200" id="xue-w2-Mgx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" name="BrandLightBlue"/>
                         <constraints>
                             <constraint firstItem="Scg-da-zi8" firstAttribute="trailing" secondItem="stz-qy-NwU" secondAttribute="trailing" id="3Fk-Xo-DV8"/>
+                            <constraint firstItem="qDR-sp-g9C" firstAttribute="bottom" secondItem="stz-qy-NwU" secondAttribute="bottom" id="D4C-4D-9Mt"/>
                             <constraint firstItem="j5s-Lc-WfT" firstAttribute="trailing" secondItem="stz-qy-NwU" secondAttribute="trailing" id="Tq9-EG-2wo"/>
                             <constraint firstItem="Scg-da-zi8" firstAttribute="leading" secondItem="stz-qy-NwU" secondAttribute="leading" id="Ub1-7q-3QS"/>
+                            <constraint firstItem="qDR-sp-g9C" firstAttribute="centerX" secondItem="stz-qy-NwU" secondAttribute="centerX" id="Yts-am-c8p"/>
                             <constraint firstItem="Scg-da-zi8" firstAttribute="top" secondItem="stz-qy-NwU" secondAttribute="top" id="oh4-tH-9d1"/>
                             <constraint firstItem="j5s-Lc-WfT" firstAttribute="leading" secondItem="stz-qy-NwU" secondAttribute="leading" id="uog-qO-Id1"/>
                             <constraint firstItem="j5s-Lc-WfT" firstAttribute="top" secondItem="Scg-da-zi8" secondAttribute="bottom" constant="-100" id="wib-t6-dnB"/>
@@ -167,7 +178,9 @@
                     <navigationItem key="navigationItem" id="3PL-iM-IUu"/>
                     <connections>
                         <outlet property="emailTextfield" destination="u72-XV-6FN" id="Nfc-8N-TNr"/>
+                        <outlet property="errorLabel" destination="qDR-sp-g9C" id="DSz-sF-aCY"/>
                         <outlet property="passwordTextfield" destination="hLb-P9-NkF" id="uaM-fo-m8M"/>
+                        <segue destination="lwd-AH-u8E" kind="show" identifier="GoToChat" id="uvx-GN-jL9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -227,7 +240,7 @@
                                         </state>
                                         <connections>
                                             <action selector="loginPressed:" destination="5v2-hE-4Ub" eventType="touchUpInside" id="Wlk-ga-czK"/>
-                                            <segue destination="lwd-AH-u8E" kind="show" id="Y0h-iE-IH0"/>
+                                            <segue destination="lwd-AH-u8E" kind="show" identifier="GoToChat" id="Y0h-iE-IH0"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -371,7 +384,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Y0h-iE-IH0"/>
+        <segue reference="uvx-GN-jL9"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="paperplane.fill" catalog="system" width="128" height="121"/>

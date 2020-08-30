@@ -11,6 +11,10 @@ import UIKit
 extension UIViewController {
     
     func segueToChat() {
-        self.performSegue(withIdentifier: "goToChat", sender: self)
+        self.performSegue(withIdentifier: Constants.segueToChat, sender: self)
+    }
+    
+    func segueToRoot() {
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }

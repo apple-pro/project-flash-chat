@@ -23,7 +23,6 @@ class ChatViewController: UIViewController {
         navigationItem.hidesBackButton = true
         tableView.dataSource = self
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
-        tableView.refreshControl?.addTarget(self, action: #selector(loadMessages), for: UIControl.Event.valueChanged)
         
         loadMessages()
     }
@@ -34,7 +33,8 @@ class ChatViewController: UIViewController {
             let messages = db.collection(K.FStore.collectionName)
             messages.addDocument(data: [
                 K.FStore.fieldNameSender: sender,
-                K.FStore.fieldNameBody: messageBody
+                K.FStore.fieldNameBody: messageBody,
+                K.FStore.fieldNameTimestamp: Date().timeIntervalSince1970
             ]) { (error) in
                 if let e = error {
                     print(e)
@@ -45,10 +45,8 @@ class ChatViewController: UIViewController {
         }
     }
     
-    @objc private func loadMessages() {
-        messages = []
-        
-        db.collection(K.FStore.collectionName).getDocuments { (querySnapshot, error) in
+    private func loadMessages() {
+        db.collection(K.FStore.collectionName).order(by: K.FStore.fieldNameTimestamp, descending: false).addSnapshotListener { (querySnapshot, error) in
             if let snapshotDocs = querySnapshot?.documents {
                 self.messages = snapshotDocs.compactMap{ (doc) in
                     

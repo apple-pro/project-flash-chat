@@ -17,5 +17,6 @@ struct K {
         static let collectionName = "messages"
         static let fieldNameSender = "sender"
         static let fieldNameBody = "body"
+        static let fieldNameTimestamp = "timestamp"
     }
 }

@@ -16,18 +16,16 @@ class ChatViewController: UIViewController {
     
     let db = Firestore.firestore()
     
-    let messages: [Message] = [
-        Message(id: "1", sender: "1@1.com", body: "Hello"),
-        Message(id: "1", sender: "1@2.com", body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
-        Message(id: "1", sender: "1@3.com", body: "Bitch!"),
-        Message(id: "1", sender: "1@1.com", body: "Haha"),
-    ]
+    var messages: [Message] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         tableView.dataSource = self
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
+        tableView.refreshControl?.addTarget(self, action: #selector(loadMessages), for: UIControl.Event.valueChanged)
+        
+        loadMessages()
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
@@ -35,13 +33,35 @@ class ChatViewController: UIViewController {
         if let messageBody = messageTextfield.text, let sender = Auth.auth().currentUser?.email {
             let messages = db.collection(K.FStore.collectionName)
             messages.addDocument(data: [
-                "sender": sender,
-                "body": messageBody
+                K.FStore.fieldNameSender: sender,
+                K.FStore.fieldNameBody: messageBody
             ]) { (error) in
                 if let e = error {
                     print(e)
                 } else {
                     print("Saved Data")
+                }
+            }
+        }
+    }
+    
+    @objc private func loadMessages() {
+        messages = []
+        
+        db.collection(K.FStore.collectionName).getDocuments { (querySnapshot, error) in
+            if let snapshotDocs = querySnapshot?.documents {
+                self.messages = snapshotDocs.compactMap{ (doc) in
+                    
+                    let data = doc.data()
+                    if let sender = data[K.FStore.fieldNameSender] as? String, let body = data[K.FStore.fieldNameBody] as? String {
+                        return Message(id: UUID.init().uuidString, sender: sender, body: body)
+                    }
+                    
+                    return nil
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -70,6 +90,5 @@ extension ChatViewController: UITableViewDataSource {
         cell.messageText?.text = m.body
         return cell
     }
-    
     
 }

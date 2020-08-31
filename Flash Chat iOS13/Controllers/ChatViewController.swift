@@ -60,7 +60,9 @@ class ChatViewController: UIViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    let end = IndexPath(row: self.messages.count-1, section: 0)
                     self.tableView.reloadData()
+                    self.tableView.scrollToRow(at: end, at: .top, animated: true)
                 }
             }
         }
@@ -87,6 +89,17 @@ extension ChatViewController: UITableViewDataSource {
         let cell: MessageCell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MessageCell
         let m = messages[indexPath.row]
         cell.messageText?.text = m.body
+        
+        if let currentUser = Auth.auth().currentUser?.email {
+            if m.sender == currentUser {
+                cell.messageBubble.backgroundColor = UIColor(named: K.Color.sender)
+                cell.senderAvatar.image = #imageLiteral(resourceName: "MeAvatar")
+            } else {
+                cell.messageBubble.backgroundColor = UIColor(named: K.Color.receiver)
+                cell.senderAvatar.image = #imageLiteral(resourceName: "YouAvatar")
+            }
+        }
+        
         return cell
     }
     

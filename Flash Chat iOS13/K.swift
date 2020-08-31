@@ -19,4 +19,9 @@ struct K {
         static let fieldNameBody = "body"
         static let fieldNameTimestamp = "timestamp"
     }
+    
+    struct Color {
+        static let receiver = "ChatBubbleReceiver"
+        static let sender = "ChatBubbleSender"
+    }
 }

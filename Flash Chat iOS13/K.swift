@@ -12,4 +12,8 @@ struct K {
     
     static let cellIdentifier = "ReusableCell"
     static let cellNibName = "MessageCell"
+    
+    struct FStore {
+        static let collectionName = "messages"
+    }
 }
